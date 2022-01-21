@@ -5,7 +5,7 @@ class SubTask extends React.Component {
         super(props);
         this.state = {
             isEditing: false,
-            subtask: { description: this.props.description, status: this.props.status, id: this.props.subtask_id }
+            subtask: { description: this.props.description, status: this.props.status }
         };
 
         this.setInput = this.setInput.bind(this);
@@ -31,7 +31,7 @@ class SubTask extends React.Component {
         return (
             <li className="list-group-item d-flex justify-content-between align-items-center">
                 <input className="form-check-input me-2" type="checkbox" value=""
-                       checked={this.props.status !== "incomplete"} onChange={() => this.props.onChange()}/>
+                       checked={this.props.status !== "incomplete"} onChange={() => this.props.changeStatus()}/>
 
                 {this.state.subtask.description}
                 {this.getStatusIcon()}
@@ -41,35 +41,15 @@ class SubTask extends React.Component {
                     <i className="bi-pencil-fill"> </i>
                 </button>
 
-                <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteSubTaskModal">
+                <button type="button" className="btn btn-outline-danger" onClick={() => this.props.onDelete()}>
                     <i className="bi-trash-fill"> </i>
                 </button>
-
-                <div className="modal fade" data-bs-backdrop="false" id="deleteSubTaskModal" tabIndex="-1" aria-labelledby="modalConfirmation" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="deleteSubTaskConfirmation"> Confirmation </h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                            </div>
-                            <div className="modal-body">
-                                Delete SubTask?
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={this.props.onDelete}> Delete </button>
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </li>
         )
     }
 
     setInput(event) {
-        this.setState( {subtask: {description: event.target.value, status: this.props.status, id: this.props.subtask_id}});
+        this.setState( {subtask: {description: event.target.value, status: this.props.status}});
     }
 
     updateSubtask() {
@@ -103,12 +83,12 @@ class SubTask extends React.Component {
         return (
             <li className="list-group-item d-flex align-content-center">
                 <input className="form-check-input me-2" type="checkbox" value=""
-                       checked={this.props.status !== "incomplete"} onChange={() => this.props.onChange()}/>
+                       checked={this.props.status !== "incomplete"} onChange={() => this.props.changeStatus()}/>
                 <input
                     type="text"
                     name="description"
                     id= "description"
-                    className="form-control"
+                    className="form-control me-2"
                     defaultValue={this.state.subtask.description}
                     onChange={this.setInput}>
                 </input>
@@ -118,7 +98,7 @@ class SubTask extends React.Component {
                 </button>
                 <button type="button" className="btn btn-outline-danger"
                         onClick={() => this.setState({isEditing: false})}>
-                    <i className="bi-trash-fill"> </i>
+                    <i className="bi-x"> </i>
                 </button>
 
             </li>

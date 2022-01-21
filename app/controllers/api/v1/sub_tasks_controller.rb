@@ -1,13 +1,13 @@
 class Api::V1::SubTasksController < ApplicationController
   def index
-    subtasks = task.sub_tasks.all
+    subtasks = task.sub_tasks.all.order(:id)
     render json: subtasks
   end
 
   def create
     subtask = task.sub_tasks.create(description: subtask_params[:description], status: :incomplete)
     if subtask
-      render json: subtask
+      index
     else
       render json: subtask.errors
     end
@@ -25,13 +25,16 @@ class Api::V1::SubTasksController < ApplicationController
   end
 
   def update
-    if subtask_params[:status] === "complete"
+    subtask.update(subtask_params)
+  end
+
+  def status
+    if subtask.status === "incomplete"
       subtask.complete!
-    elsif subtask_params[:status] === "incomplete"
+    else
       subtask.incomplete!
     end
-
-    subtask.update(subtask_params)
+    index
   end
 
   private
@@ -39,11 +42,11 @@ class Api::V1::SubTasksController < ApplicationController
     params.permit(:description, :status)
   end
 
-  def subtask
-    @subtask = SubTask.find(params[:id])
-  end
-
   def task
     @task = Task.find(params[:task_id])
+  end
+
+  def subtask
+    @subtask = task.sub_tasks.find(params[:id])
   end
 end

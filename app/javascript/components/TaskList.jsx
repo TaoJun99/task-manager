@@ -28,7 +28,8 @@ class TaskList extends React.Component {
     }
 
     onFilterChange(event) {
-        const newFilteredTasks = this.state.tasks.filter(task => task.tag.toLowerCase().startsWith(event.target.value.toLowerCase()));
+        const newFilteredTasks = this.state.tasks.filter(
+            task => task.tag.toLowerCase().startsWith(event.target.value.toLowerCase()));
         this.setState({filteredTasks: newFilteredTasks});
     }
 
@@ -131,7 +132,7 @@ class TaskList extends React.Component {
                 <div className="py-5 justify-content-center">
                     <main className="container">
                         <div className="row">
-                            { tasks[0] === "initial" ? loading : taskDisplay}
+                            { this.state.tasks[0] === "initial" ? loading : taskDisplay}
                         </div>
                     </main>
                 </div>

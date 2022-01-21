@@ -20,13 +20,9 @@ class Api::V1::TasksController < ApplicationController
   def show
     if task
       render json: task
-      # render json: { title: task.title, description: task.description,
-      #                deadline: task.deadline.strftime("%d %b %Y, %H%M"), status: task.status }
     else
       render json: task.errors
     end
-
-
   end
 
   def destroy
@@ -35,13 +31,17 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    if task_params[:status] === "complete"
+    task.update(task_params)
+    render json: task
+  end
+
+  def status
+    if task.status === "incomplete"
       task.complete!
-    elsif task_params[:status] === "incomplete"
+    else
       task.incomplete!
     end
-
-    task.update(task_params)
+    render json: task
   end
 
   private

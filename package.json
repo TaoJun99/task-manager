@@ -18,5 +18,9 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3"
+  },
+
+  "scripts": {
+    "start": "node index.js"
   }
 }

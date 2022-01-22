@@ -19,13 +19,5 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3"
-  },
-
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
   }
-
-
 }

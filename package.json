@@ -21,6 +21,6 @@
   },
 
   "scripts": {
-    "start": "node index.js"
+    "start": "cd app/javascript/controllers && node index.js"
   }
 }
